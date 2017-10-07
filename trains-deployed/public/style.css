@@ -1,0 +1,76 @@
+body {
+  background-color: #212529;
+}
+.jumbotron{
+  background-color: #1abc9c;
+  color: white;
+  
+ }
+
+.panel-primary >.panel-heading{
+  background-color: #1abc9c;
+  color: white;
+  border-color: orange;
+  }
+
+  .panel-heading {
+    padding: 10px 15px;
+    border-bottom: 5px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-color: orange;
+  }
+
+
+
+body {
+      font: 14px Montserrat, sans-serif;
+      line-height: 1.8;
+      color: black;
+  }
+
+  h1{
+    font-size: 20px;
+  }
+  p {font-size: 14px;}
+
+  #add-train-btn{
+    font: 14px Montserrat, sans-serif;
+    background-color: orange;
+    border-color: orange;
+    
+
+  }
+  .margin {margin-bottom: 45px;}
+  .bg-1 { 
+      background-color: #1abc9c; /* Green */
+      color: #ffffff;
+  }
+  .bg-2 { 
+      background-color: #474e5d; /* Dark Blue */
+      color: #ffffff;
+  }
+  .bg-3 { 
+      background-color: #ffffff; /* White */
+      color: #555555;
+  }
+  .bg-4 { 
+      background-color: #2f2f2f; /* Black Gray */
+      color: #fff;
+  }
+  .container-fluid {
+      padding-top: 70px;
+      padding-bottom: 70px;
+  }
+  .navbar {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border: 0;
+      border-radius: 0;
+      margin-bottom: 0;
+      font-size: 12px;
+      letter-spacing: 5px;
+  }
+  .navbar-nav  li a:hover {
+      color: #1abc9c !important;
+  }
