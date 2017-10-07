@@ -29,10 +29,17 @@ $("#add-train-btn").on("click", function(event) {
   event.preventDefault();
 
   // Grabs user input
-  var trainName = $("#train-name-input").val().trim();
-  var trainDest = $("#destination-input").val().trim();
-  var trainFirst = moment($("#first-input").val().trim(), "HH:mm").format("X");
-  var trainRate = $("#rate-input").val().trim();
+  var trainName = "";
+  var trainDest = ""
+  var trainFirst = "";
+  var trainRate = 0;
+  var currentTime = moment();
+var index = 0;
+
+ trainName = $("#train-name-input").val().trim();
+  trainDest = $("#destination-input").val().trim();
+  trainFirst = $("#first-input").val().trim();
+  trainRate = $("#rate-input").val().trim();
 
   // Creates local "temporary" object for holding employee data
   var newTrain = {
@@ -79,21 +86,54 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
   console.log(trainFirst);
   console.log(trainRate);
 
-  // Prettify the employee start
-  var trainStartPretty = moment.unix(trainFirst).format("HH:mm");
+// Show current time
+var datetime = null,
+date = null;
 
-  // Calculate the months worked using hardcore math
-  // To calculate the months worked
-  var trainMonths = moment().diff(moment.unix(trainFirst, "X"), "months");
-  console.log(trainMonths);
+var update = function () {
+  date = moment(new Date())
+  datetime.html(date.format('dddd, MMMM Do YYYY, h:mm:ss a'));
+};
 
-  // Calculate the total billed rate
-  var trainBilled = trainMonths * trainRate;
-  console.log(trainBilled);
+$(document).ready(function(){
+  datetime = $('#current-status')
+  update();
+  setInterval(update, 1000);
+});
+  
+  // First Time (pushed back 1 year to make sure it comes before current time)
+  var firstTimeConverted = moment(trainFirst, "HH:mm").subtract(1, "years");
+  //console.log("FTC: "+firstTimeConverted);
+
+  // Difference between the times
+  var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+  //console.log("Difference in time: " + diffTime);
+
+  // Time apart (remainder)
+  var tRemainder = diffTime % trainRate;
+  //console.log(tRemainder);
+
+  // Minute Until Train
+  var minutesAway = trainRate - tRemainder;
+  //console.log("Minutes away: " + minutesAway);
+
+  // Next Train
+  var nextTrain = moment().add(minutesAway, "minutes");
+  //console.log("Arrival time: " + moment(nextTrain).format("hh:mm"));
+
+  // Arrival time
+  var nextArrival = moment(nextTrain).format("HH:mm a");
+
+  var nextArrivalUpdate = function() {
+    date = moment(new Date())
+    datetime.html(date.format('HH:mm a'));
+  }
+
+  
 
   // Add each train's data into the table
-  $("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDest + "</td><td>" +
-  trainStartPretty + "</td><td>" + trainMonths + "</td><td>" + trainRate + "</td><td>");
+  $("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDest + "</td><td>" + trainRate + "</td><td>" +
+  nextArrival + "</td><td>" + minutesAway + "</td><td>");
 });
 
 // Example Time Math
